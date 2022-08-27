@@ -2,48 +2,57 @@ const gameBoard = (() => {
 
     const board = [];
 
-    function _fillBoardArray() {
-        
-        for (let i = 0; i < 9; i++)
-        {
-            board.push("x");
-        }
-    }
+    const selection = () =>{
+    
+        let selections = document.querySelectorAll("button");
+        selections.forEach(button => button.addEventListener("click", () => {
+        selection = button.id;
+        console.log(selection);
+        }));    
+    };
 
-    function _displayMarker(node, array)
-    {
-        node.innerHTML = array;
-    }
+    const getSelection = () => selection;
 
     function _fillBoardDiv() {
-        _fillBoardArray();
+
         let tiles = document.querySelectorAll(".tile");
         
-        for (let i = 0; i < board.length; i++){
+        for (let i = 0; i < 9; i++){
             tiles[i].addEventListener("click", () => {
-                console.log(board[i]);
-                tiles[i].innerHTML = board[i];
                 
+                tiles[i].innerHTML = me.selection;
+                board[i] = tiles[i].innerHTML;
             });
         }
     };
     
     return {
+        board,
         
         fillBoardDiv: function() {
             _fillBoardDiv();
-        }
+        },
+        getSelection
+        
     }
     
 })();
 
+const player = (selection, first) => {
+    
+    return {
+        selection,
+        first
+    }
+}
+
+    
+
 
 
 let gamePlay = (() => {
-    const turn = (player) => {
-
-    }
-
+    
 })();
 
+let me = player(gameBoard.selection, true);
 gameBoard.fillBoardDiv();
