@@ -5,4 +5,40 @@
 
 body{
     background-color: rgb(229, 229, 138);
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+#board{
+    margin-top: 10vh;
+    display: grid;
+    width: 80vw;
+    height: 55vh;
+    align-items:center;
+    justify-items: center;
+}
+#board div{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+}
+#board div div{
+    width:200px;
+    height: 200px;
+    font-size: 100px;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: 1fr;
+    
+}
+.border{
+    border-right: 10px solid;
+    border-bottom: 10px solid;
+}
+.bottom{
+    border-bottom: 10px solid;
+}
+.right{
+    border-right: 10px solid;
 }
