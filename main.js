@@ -9,9 +9,8 @@ const gameBoard = (() => {
         let selections = document.querySelectorAll("button");
         selections.forEach(button => button.addEventListener("click", () => {
         selection = button.id;
-        console.log(selection);
         gamePlay.pOne.selection = selection;
-        
+        gamePlay.pTwo.selection = "X";
         }));    
     }
 
@@ -23,6 +22,12 @@ const gameBoard = (() => {
                 
                 if(gamePlay.pOne.active){
                     tiles[i].innerHTML = gamePlay.pOne.selection;
+                    gamePlay.pOne.active = false;
+                }
+                else {
+                    tiles[i].innerHTML = gamePlay.pTwo.selection;
+                    console.log(gamePlay.pTwo.selection);
+                    gamePlay.pOne.active = true;
                 }
                 
                 board[i] = tiles[i].innerHTML;
@@ -56,11 +61,20 @@ const player = (selection, active) => {
 
 
 const gamePlay = (() => {
-    let pTwo = "";
     gameBoard.getSelection();
-    let pOne = player(gameBoard.selection); 
+    let pTwo = player("O", false);
+    let pOne = player(gameBoard.selection, true);
 
-    return {pOne};
+    if(pOne.selection === "X")
+    {
+        pTwo = player("O", false);
+    }
+    else 
+    {
+        pTwo = player("X", false);
+    }
+    
+    return {pOne, pTwo};
 
 })();
 
