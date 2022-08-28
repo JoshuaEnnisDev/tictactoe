@@ -2,26 +2,30 @@ const gameBoard = (() => {
 
     const board = [];
 
-    function _fillBoardDiv() {
+    let selection = "";
 
+    function _getSelection() {
+        let selections = document.querySelectorAll("button");
+        selections.forEach(button => button.addEventListener("click", () => {
+        selection = button.id;
+        console.log(selection);
+        
+        }));    
+    }
+
+    function _fillBoardDiv() {
         let tiles = document.querySelectorAll(".tile");
-        let me = player(player.selection);
+        
         for (let i = 0; i < 9; i++){
             tiles[i].addEventListener("click", () => {
                 
-                tiles[i].innerHTML = me.selection;
+                tiles[i].innerHTML = selection;
 
                 board[i] = tiles[i].innerHTML;
             });
         }
     };
-    const getSelection = (selection) => {
-        let selections = document.querySelectorAll("button");
-        selections.forEach(button => button.addEventListener("click", () => {
-        selection = 'x';
-        
-        }));    
-    }
+    
     
     return {
         board,
@@ -29,7 +33,10 @@ const gameBoard = (() => {
         fillBoardDiv: function() {
             _fillBoardDiv();
         },
-        getSelection
+        getSelection: function(){
+            _getSelection();
+        },
+        selection
     }
     
 })();
@@ -40,7 +47,6 @@ const player = () => {
     return {selection};
        
 };
-
-let pOne = player.selection;
+gameBoard.getSelection();
 gameBoard.fillBoardDiv();
 
