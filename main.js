@@ -3,6 +3,7 @@ const gameBoard = (() => {
     const board = [];
 
     let selection = "";
+    let tiles = document.querySelectorAll(".tile");
 
     function _getSelection() {
         
@@ -10,16 +11,25 @@ const gameBoard = (() => {
         selections.forEach(button => button.addEventListener("click", () => {
         selection = button.id;
         gamePlay.pOne.selection = selection;
-        gamePlay.pTwo.selection = "X";
+        if (selection === "X")
+        {
+            gamePlay.pTwo.selection = "O";
+        }
+        else 
+        {
+            gamePlay.pTwo.selection = "X";
+        }
+        
         }));    
     }
 
     function _fillBoardDiv() {
-        let tiles = document.querySelectorAll(".tile");
+        
 
         for (let i = 0; i < 9; i++){
             tiles[i].addEventListener("click", () => {
-                
+                gamePlay.checkWin(board);
+
                 if(gamePlay.pOne.active){
                     tiles[i].innerHTML = gamePlay.pOne.selection;
                     gamePlay.pOne.active = false;
@@ -34,6 +44,14 @@ const gameBoard = (() => {
             });
         }
     };
+
+    function _reset() {
+        for (let i = 0; i < board.length; i++)
+        {
+            tiles[i].innerHTML = "";
+            board[i] = [];
+        }
+    }
     
     
     return {
@@ -44,6 +62,9 @@ const gameBoard = (() => {
         },
         getSelection: function(){
             _getSelection();
+        },
+        reset: function(){
+            _reset();
         },
         selection
     }
@@ -65,20 +86,23 @@ const gamePlay = (() => {
     let pTwo = player("O", false);
     let pOne = player(gameBoard.selection, true);
 
-    if(pOne.selection === "X")
-    {
-        pTwo = player("O", false);
-    }
-    else 
-    {
-        pTwo = player("X", false);
+    const checkWin = (array) => {
+        for(let i = 0; i < array.length; i++)
+        {
+            if ( pOne.selection === array[i])
+            {
+                if (array[i] === array[i + 1])
+                {
+                    console.log("Win!");
+                    gameBoard.reset();
+                }
+            }
+        }
     }
     
-    return {pOne, pTwo};
+    return {pOne, pTwo, checkWin};
 
 })();
-
-
 
 gameBoard.fillBoardDiv();
 
